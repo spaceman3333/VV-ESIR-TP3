@@ -26,3 +26,72 @@ Use the project in [tp3-balanced-strings](../code/tp3-balanced-strings) to compl
 
 ## Answer
 
+1. * String Length 
+     * Empty string (`""`)
+     * Single character (`"{"`, `")"`)
+     * Multiple characters (`"{}"`, `"{[]}"`)
+
+   * Balance State 
+     * Balanced strings (`"{}"`, `"([])"`, `"{[()]}"`)
+     * Unbalanced strings (`"("`, `"([)]"`, `"{(}{})"`)
+
+   * Symbol Type Usage 
+     * All three types used (`"{[()]}"`)
+     * Only one type used (`"{}"`, `"[][]"`)
+     * Mixed but incomplete pairs (`"{[}"`, `"({]"`)
+
+   * Order of Symbols 
+     * Correctly nested (`"{[()]}"`)
+     * Incorrectly nested (`"([)]"`, `"[{]}"`)
+     * Reversed symbols (`"]["`, `")("`)
+   * Redundant Symbols
+     * Extra opening brackets (`"({{"`)
+     * Extra closing brackets (`"())"`)
+
+2. The current implementation has the following critical code segments:
+   1. **Loop Initialization and Execution**
+       - `do { prev = str; str = str.replace(...) } while (!str.equals(prev));`
+   2. **String Replacement for Pair Removal**
+       - `str.replace("()", "").replace("[]", "").replace("{}","");`
+   3. **Final Check**
+       - `return str.isEmpty();`
+
+   Current Test Cases Coverage:
+   1. `"{[()]}"` → `true`
+      * Covers correct nesting and successful pair removal. ✅
+
+   2. `"([)]"` → `false`
+      * Covers incorrect nesting. ✅
+
+   3. `""` → `true`
+      * Covers empty input. ✅
+
+   4. `"({{"` → `false`
+      * Covers extra opening brackets. ✅
+
+   5. `")("` → `false`
+      * Covers reversed order of brackets. ✅
+
+   Uncovered Scenarios:
+   1. Single Closing Bracket: `"]"` → Should return `false`.
+   2. Single Opening Bracket: `"("` → Should return `false`.
+   3. Balanced Repeated Pairs: `"()[]{}"` → Should return `true`.
+   4. Long Balanced Nesting: `"({[]})"` → Should return `true`.
+   5. Unbalanced with Extra Closing: `"(()))"` → Should return `false`.
+
+    **By adding these cases, we achieve 100% statement coverage and ensure all logical paths are tested.**
+
+
+3. The critical predicate in the current code is the condition in the while loop:
+```java
+while (!str.equals(prev));
+```
+This predicate involves one boolean operator (!), so Base Choice Coverage focuses on ensuring both possible outcomes (true and false) are tested.
+The current test cases cover both outcomes of the predicate.\
+However, to ensure thoroughness, testing inputs that require multiple iterations to stabilize the string will strengthen coverage.\
+Input: `"((()))"` → Expected Output: `true`
+
+This case forces multiple passes through the loop to fully eliminate pairs.
+It ensures `str.equals(prev)` transitions from false to true after several iterations.
+
+4. After running PIT, the mutation score achieved was 100%. The line coverage stands at 80% because PIT cannot mutate line 5, which initializes the constructor. However, this is not an issue since the constructor is private. I have committed the PIT report for your review.
