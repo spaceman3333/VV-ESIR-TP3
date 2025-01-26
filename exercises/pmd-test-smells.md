@@ -14,7 +14,7 @@ Discuss the test smell you found with the help of PMD and propose here an improv
 Include the improved test code in this file.
 
 ## Answer
-I have selected the [Apache Commons Lang](https://github.com/apache/commons-lang) project to identify potential code smells.
+We have selected the [Apache Commons Lang](https://github.com/apache/commons-lang) project to identify potential code smells.
 
 ### Test Smell Detected
 Using the PMD rule `JUnitTestContainsTooManyAsserts`, the test case `testToString` in the [`AnnotationUtilsTest.java`](https://github.com/apache/commons-lang/blob/master/src/test/java/org/apache/commons/lang3/AnnotationUtilsTest.java) file from the Apache Commons Lang project was found to contain multiple assertions. Specifically:
@@ -97,6 +97,6 @@ public void testToStringContainsTimeout() {
 ---
 
 ### Advantages of Refactoring
-1. **Improved Readability:** By refactoring, each test is focused on a single behavior, making it easier to read and understand.
+1. **mproved Readability:** By refactoring, each test is focused on a single behavior, making it easier to read and understand.
 2. **Simplified Debugging:** In case of failure, the specific behavior that failed is immediately identifiable without needing to analyze multiple assertions.
 3. **Alignment with Best Practices:** The refactored code follows the principle of testing one behavior per test method, resulting in a more robust and maintainable test suite.
